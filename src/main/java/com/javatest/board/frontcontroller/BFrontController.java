@@ -9,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.javatest.board.command.BCommand;
-import com.javatest.board.command.BListCommand;
-import com.javatest.board.command.BWriteCommand;
+import com.javatest.board.command.*;
 
 /**
  * Servlet implementation class BFrontController
@@ -65,10 +63,21 @@ public class BFrontController extends HttpServlet {
 			command.excute(request, response);
 			viewPage = "list.jsp";
 			//response.sendRedirect(viewPage); // 기존의 request 객체의 내용을 사용하지 못함
+		} else if(com.equals("/content_view.do")) {
+			command = new BContentCommand(); 
+			command.excute(request, response);
+			viewPage = "content_view.jsp";
 		}
+		else if(com.equals("/modify.do")) {
+			command = new BModifyCommand(); 
+			command.excute(request, response);
+			viewPage = "list.do";
+		}
+		
+		
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 		// 기존 request 객체를 인수로 넣어서 forward하므로 기존 request 객체의 내용을 사용할 수 있음
-	
 	}
 }
